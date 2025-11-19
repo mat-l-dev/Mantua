@@ -1,1 +1,21 @@
 // Dashboard layout with sidebar
+import { Header } from "@/components/dashboard/header"
+import { Sidebar } from "@/components/dashboard/sidebar"
+
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <div className="min-h-screen bg-zinc-50/50 dark:bg-zinc-900/50">
+      <Sidebar />
+      <Header />
+      <main className="lg:ml-64">
+        <div className="container mx-auto p-6 max-w-7xl animate-in fade-in duration-500">
+          {children}
+        </div>
+      </main>
+    </div>
+  )
+}
