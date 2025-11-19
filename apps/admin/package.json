@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mantua/shared": "workspace:*",
+    "@radix-ui/react-form": "^0.1.8",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.83.0",
     "next": "^15",
