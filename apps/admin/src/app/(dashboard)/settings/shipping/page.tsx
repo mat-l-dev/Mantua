@@ -9,11 +9,19 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { TierUpdateForm } from "@/components/settings/tier-form"
 
-export default async function ShippingSettingsPage() {
-  const tiers = await getTiers()
+interface Tier {
+  id: string
+  tier_scope: string
+  puntos_minimos: number
+  puntos_maximos: number
+  costo: number
+}
 
-  const limaTiers = tiers.filter((t: any) => t.tier_scope === "lima_callao")
-  const provinciaTiers = tiers.filter((t: any) => t.tier_scope === "provincia")
+export default async function ShippingSettingsPage() {
+  const tiers = (await getTiers()) as Tier[]
+
+  const limaTiers = tiers.filter((t) => t.tier_scope === "lima_callao")
+  const provinciaTiers = tiers.filter((t) => t.tier_scope === "provincia")
 
   return (
     <div className="space-y-6">
@@ -37,7 +45,7 @@ export default async function ShippingSettingsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {limaTiers.map((tier: any) => (
+            {limaTiers.map((tier) => (
               <TierUpdateForm key={tier.id} tier={tier} />
             ))}
           </CardContent>
@@ -52,7 +60,7 @@ export default async function ShippingSettingsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {provinciaTiers.map((tier: any) => (
+            {provinciaTiers.map((tier) => (
               <TierUpdateForm key={tier.id} tier={tier} />
             ))}
           </CardContent>

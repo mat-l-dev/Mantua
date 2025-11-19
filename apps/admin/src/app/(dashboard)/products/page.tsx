@@ -1,10 +1,22 @@
+export const dynamic = 'force-dynamic'
+
 import { getProducts } from "@/actions/products"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Plus } from "lucide-react"
 
+interface Product {
+  id: string
+  name: string
+  description?: string
+  image_path?: string
+  selling_price: number
+  cost_price: number
+  puntos_acarreo: number
+}
+
 export default async function ProductsPage() {
-  const products = await getProducts()
+  const products = (await getProducts()) as Product[]
 
   return (
     <div className="space-y-6">
@@ -34,7 +46,7 @@ export default async function ProductsPage() {
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product: any) => (
+          {products.map((product) => (
             <div
               key={product.id}
               className="border rounded-lg p-4 hover:shadow-lg transition-shadow"
@@ -52,10 +64,10 @@ export default async function ProductsPage() {
               </p>
               <div className="space-y-1 mb-4 text-sm">
                 <p>
-                  <span className="font-medium">Precio:</span> S/ {product.price}
+                  <span className="font-medium">Precio:</span> S/ {product.selling_price}
                 </p>
                 <p>
-                  <span className="font-medium">Costo:</span> S/ {product.cost}
+                  <span className="font-medium">Costo:</span> S/ {product.cost_price}
                 </p>
                 <p>
                   <span className="font-medium">Puntos:</span>{" "}
