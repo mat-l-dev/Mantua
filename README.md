@@ -1,135 +1,122 @@
-# Turborepo starter
+🏰 Proyecto MANTUA - Contexto Técnico Maestro
 
-This Turborepo starter is maintained by the Turborepo core team.
+Propósito: Documento fuente de verdad para el desarrollo del Ecommerce Mantua.
+Estado: 🟡 Fase 1: Construcción del Admin Panel (Login completado, Dashboard pendiente).
+Tech Stack: Next.js 15, Supabase (SSR), Turborepo, Shadcn/UI, Zustand.
 
-## Using this example
+1. 🎯 Visión del Proyecto
 
-Run the following command:
+Ecommerce especializado en venta de equipos tecnológicos de gran tamaño (Starlink, Kits Solares) en Perú.
 
-```sh
-npx create-turbo@latest
-```
+Modelo de Venta: Pasarela de Pago Manual (Subida de voucher Yape/Plin/BCP).
 
-## What's inside?
+Logística: Cálculo de envíos basado en "Esfuerzo Logístico" (Puntos) debido a la carga pesada.
 
-This Turborepo includes the following packages/apps:
+2. 🏗️ Arquitectura (Monorepo)
 
-### Apps and Packages
+mantua/
+├── apps/
+│   ├── 🛍️ storefront/   (La Tienda - Puerto 3000)
+│   │   ├── src/actions  (Lógica de Checkout y Envíos)
+│   │   └── src/lib      (Zustand Store, Clientes Supabase)
+│   └── 🔐 admin/        (El Panel - Puerto 3001)
+│       ├── src/actions  (Gestión de Órdenes y Productos)
+│       └── src/app      (Dashboard Protegido)
+└── packages/
+    └── 📦 shared/       (Lógica Compartida)
+        ├── types/       (database.types.ts - Generado de SQL)
+        ├── constants/   (Enums: Payment Methods, Order Status)
+        └── utils/       (Format Currency: S/ PEN)
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+3. 🧠 Reglas de Negocio (Core)
 
-### Utilities
+A. Logística: Sistema de "Puntos de Acarreo"
 
-This Turborepo has some additional tools already setup for you:
+No usamos APIs de courier tradicionales.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+Lógica: Cada producto tiene puntos_acarreo (int).
 
-### Build
+Fórmula de Costo: El sistema suma el costo por producto linealmente.
 
-To build all apps and packages, run the following command:
+Costo Total = Σ (Tier del Producto × Cantidad)
 
-```
-cd my-turborepo
+Escenarios:
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+Provincia: El costo cobrado es el traslado a la agencia (Shalom/Marvisur). El flete real es Pago en Destino.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+Lima/Callao: El costo es una tarifa plana sugerida (Indrive/Motorizado), editable manualmente por el Admin al procesar la orden.
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+B. Flujo de Pago Manual
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+Cliente hace checkout -> Orden estado pending.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+Cliente sube foto del voucher -> Orden estado processing.
 
-### Develop
+Admin verifica foto en Dashboard -> Orden estado verified (Resta Stock) o rejected.
 
-To develop all apps and packages, run the following command:
+C. Autenticación Híbrida
 
-```
-cd my-turborepo
+Supabase Auth: Maneja el login seguro.
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+Trigger SQL (handle_new_user): Sincroniza automáticamente cada registro de auth.users a la tabla pública customers para poder asociarle órdenes.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+4. ✅ Estado Actual del Desarrollo
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+Infraestructura & Configuración
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+[x] Monorepo Turborepo inicializado (pnpm workspaces).
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+[x] Shadcn/UI configurado en ambas apps (Themes: New York).
 
-### Remote Caching
+[x] Paquete @mantua/shared operativo y linkeado.
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+[x] Clientes Supabase SSR (client.ts, server.ts, middleware.ts) creados.
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Base de Datos (Supabase)
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+[x] Schema SQL completo (products, orders, tiers_acarreo, etc.).
 
-```
-cd my-turborepo
+[x] Políticas RLS (Seguridad Row Level) activas.
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+[x] Trigger de Auth (public.customers) activo.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+[x] Ajuste: Función SQL de envío antigua eliminada en favor de cálculo en TypeScript.
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Aplicación: Admin Panel
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+[x] Estructura de rutas ((auth), (dashboard)).
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
+[x] Módulo de Login completo (UI + Server Action).
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+[x] Validación con Zod.
 
-## Useful Links
+[ ] Pendiente: Página Principal (Dashboard Metrics).
 
-Learn more about the power of Turborepo:
+Aplicación: Storefront
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+[x] Lógica de Cálculo de Envíos (calculate-shipping.ts) creada.
+
+[ ] Pendiente: Home Page y Catálogo visual.
+
+5. 📝 Roadmap (Siguientes Pasos)
+
+Dashboard Home (admin): Crear la vista principal con métricas vacías (para tener a dónde llegar tras el login).
+
+Gestor de Productos (admin): CRUD para crear items y asignarles sus Puntos de Acarreo.
+
+Configuración de Tiers (admin): Interfaz para definir cuánto cuesta cada tramo de puntos.
+
+Catálogo Público (storefront): Mostrar los productos reales de la BD.
+
+6. 🤖 Instrucciones para IAs Colaboradoras
+
+"Al generar código para Mantua:
+
+Usa Next.js 15 Server Actions para mutaciones.
+
+Respeta la estructura de carpetas src/.
+
+Importa tipos desde @mantua/shared.
+
+La lógica de envíos reside en apps/storefront/actions/checkout, no en la BD."
