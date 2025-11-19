@@ -1,11 +1,12 @@
 // Dashboard layout with sidebar
+import { ReactNode } from "react"
 import { Header } from "@/components/dashboard/header"
 import { Sidebar } from "@/components/dashboard/sidebar"
 
 export default function DashboardLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <div className="min-h-screen bg-zinc-50/50 dark:bg-zinc-900/50">
