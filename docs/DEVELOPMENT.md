@@ -61,7 +61,8 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 # 4. Ejecuta en orden:
 #    - migration/SQL OFICIAL.sql
 #    - migration/RLS_POLICIES.sql
-#    - migration/FIXES_SECURITY.sql
+#    - migration/TRIGGERS_MEJORADOS.sql
+#    - migration/FIX_SECURITY_WARNINGS.sql (si hay warnings del linter)
 ```
 
 ### 5. Generar Tipos de Supabase
@@ -607,18 +608,99 @@ NEXT_PUBLIC_SITE_URL
 
 ## 🔐 Seguridad
 
+### Arquitectura de Autenticación
+
+#### Middleware de Admin (`src/middleware.ts`)
+
+**Protecciones Implementadas:**
+
+1. **Verificación de Sesión**: Usa `supabase.auth.getUser()` (más seguro que getSession)
+2. **Validación de Rol**: Solo usuarios en tabla `staff` pueden acceder
+3. **Redirección Automática**: Usuarios no-staff son deslogueados automáticamente
+4. **Rutas Protegidas**: `/`, `/products`, `/settings` requieren autenticación
+
+**Flujo:**
+
+```
+Cliente sin sesión → /login (permitido)
+Cliente con sesión válida + staff → /dashboard (permitido)
+Cliente con sesión válida - NO staff → Desloguear + /login (bloqueado)
+```
+
+### Triggers de Sincronización
+
+**Archivos**: 
+- `migration/TRIGGERS_MEJORADOS.sql` - Funciones y triggers principales
+- `migration/FIX_SECURITY_WARNINGS.sql` - Correcciones de Supabase Linter
+
+#### 1. Sincronización de Usuarios (CREATE & UPDATE)
+
+```sql
+handle_new_user() 
+  → INSERT en auth.users → Crea row en customers
+
+handle_update_user()
+  → UPDATE en auth.users → Sincroniza email/phone/first_name/last_name/deleted_at
+```
+
+**Por qué es crítico**: Si no sincronizas UPDATE, cambiar email rompe las órdenes.
+**Set search_path = public**: Previene ataques de SQL injection por search_path manipulation.
+
+#### 2. Cálculo Automático de Costo de Envío
+
+```sql
+recalcular_envio_single()
+  → INSERT en orders → Calcula shipping_cost por Puntos de Acarreo
+  → Busca tier automáticamente según puntos_acarreo + shipping_scope
+```
+
+#### 3. Auditoría de Cambios
+
+```sql
+audit_log_changes()
+  → INSERT/UPDATE/DELETE en [products, orders, payment_proofs]
+  → Registra quién, qué, cuándo con datos JSONB
+  → RLS habilitado: usuarios ven solo sus logs, staff ve todos
+```
+
+#### 4. Security Improvements (FIX_SECURITY_WARNINGS.sql)
+
+✅ **Function Search Path Fixed**: Agregado `SET search_path = public` a todas las funciones
+✅ **RLS Habilitado en audit_log**: Políticas segregan datos por usuario/staff
+✅ **Triggers Recreados**: Referencias actualizadas después de DROP/CREATE
+
 ### Checklist de Seguridad
 
-- [ ] RLS habilitado en todas las tablas públicas
-- [ ] Service Role Key NUNCA en código cliente
-- [ ] Validación Zod en Server Actions
+- [x] RLS habilitado en todas las tablas públicas (incluyendo audit_log)
+- [x] Middleware verifica rol de staff en rutas protegidas
+- [x] Triggers sincronizan datos entre auth.users y customers
+- [x] Validación Zod en Server Actions
+- [x] Service Role Key NUNCA en código cliente
+- [x] Function search_path configurado en todas las funciones
+- [x] Auditoría JSONB de cambios críticos
 - [ ] Rate limiting en endpoints críticos (futuro)
-- [ ] CORS configurado correctamente
-- [ ] Sanitización de inputs SQL (Supabase lo hace)
+- [ ] CORS configurado correctamente (futuro)
+- [x] Sanitización de inputs (Supabase maneja automáticamente)
+
+### Variables Sensibles
+
+**NUNCA** commitear estos secretos:
+
+```env
+SUPABASE_SERVICE_ROLE_KEY=eyJ... ← ⚠️ NUNCA en .env.local en git
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ... ← OK en .env.local (clave pública)
+NEXT_PUBLIC_SUPABASE_URL=https://... ← OK en código (URL pública)
+```
+
+**Dónde guardar secrets:**
+
+- GitHub Secrets (para CI/CD)
+- Vercel Environment Variables (para production)
+- `.env.local` (solo local, nunca en git)
 
 ### Reporte de Vulnerabilidades
 
-Si encuentras una vulnerabilidad de seguridad, **NO** abras un issue público. Contacta directamente al equipo.
+Si encuentras una vulnerabilidad de seguridad, **NO** abras un issue público. Contacta directamente al equipo a través de security@mantua.local.
 
 ---
 
