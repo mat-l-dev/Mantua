@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { createProduct } from "@/actions/products"
+import { createProduct, updateProduct } from "@/actions/products"
 import {
   Form,
   FormField,
@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import ImageUpload from "@/components/ui/image-upload"
 import { Loader2 } from "lucide-react"
+import { Database } from "@mantua/shared/types/database.types"
 
 const productSchema = z.object({
   name: z.string().min(1, "Nombre requerido").max(255),
@@ -36,14 +37,25 @@ const productSchema = z.object({
 
 type ProductFormValues = z.infer<typeof productSchema>
 
-export function ProductForm() {
+interface ProductFormProps {
+  initialData?: Database['public']['Tables']['products']['Row'] | null
+}
+
+export function ProductForm({ initialData }: ProductFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
   const form = useForm<ProductFormValues>({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(productSchema) as any,
-    defaultValues: {
+    defaultValues: initialData ? {
+      name: initialData.name,
+      description: initialData.description || "",
+      price: initialData.selling_price,
+      cost: initialData.cost_price,
+      puntos_acarreo: initialData.puntos_acarreo,
+      images: initialData.image_path ? [initialData.image_path] : [],
+    } : {
       name: "",
       description: "",
       price: 0,
@@ -53,29 +65,46 @@ export function ProductForm() {
     },
   })
 
-
-
   const onSubmit: SubmitHandler<ProductFormValues> = async (values) => {
     try {
       setLoading(true)
-      const result = await createProduct({
-        name: values.name,
-        description: values.description || null,
-        price: values.price,
-        cost: values.cost,
-        puntos_acarreo: values.puntos_acarreo,
-        image_path: values.images?.[0] || null,
-      })
+      
+      if (initialData) {
+        const result = await updateProduct(initialData.id, {
+          name: values.name,
+          description: values.description || null,
+          price: values.price,
+          cost: values.cost,
+          puntos_acarreo: values.puntos_acarreo,
+          image_path: values.images?.[0] || null,
+        })
 
-      if (result.error) {
-        alert(`Error: ${result.error}`)
-        return
+        if (result.error) {
+          alert(`Error: ${result.error}`)
+          return
+        }
+        
+        router.refresh()
+      } else {
+        const result = await createProduct({
+          name: values.name,
+          description: values.description || null,
+          price: values.price,
+          cost: values.cost,
+          puntos_acarreo: values.puntos_acarreo,
+          image_path: values.images?.[0] || null,
+        })
+
+        if (result.error) {
+          alert(`Error: ${result.error}`)
+          return
+        }
+
+        router.push("/products")
       }
-
-      router.push("/products")
     } catch (error) {
       console.error("Error:", error)
-      alert("Error al crear producto")
+      alert(initialData ? "Error al actualizar producto" : "Error al crear producto")
     } finally {
       setLoading(false)
     }
@@ -227,10 +256,10 @@ export function ProductForm() {
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creando...
+                {initialData ? "Guardando..." : "Creando..."}
               </>
             ) : (
-              "Crear Producto"
+              initialData ? "Guardar Cambios" : "Crear Producto"
             )}
           </Button>
         </form>
