@@ -22,8 +22,10 @@ export default async function AuditPage() {
   })) || []
 
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
-      <AuditClient data={formattedLogs} />
+    <div className="flex-col animate-fade-in">
+      <div className="flex-1 space-y-6 p-8 pt-6">
+        <AuditClient data={formattedLogs} />
+      </div>
     </div>
   )
 }
