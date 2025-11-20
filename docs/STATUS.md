@@ -274,3 +274,28 @@ Antes de modificar CUALQUIER archivo:
 
 **Última revisión:** 20 Noviembre 2025  
 **Próximo paso:** Phase 4 - Aplicar componentes a todas las páginas (CON CUIDADO)
+
+---
+
+## 🚨 CRITICAL ISSUE IDENTIFIED (Nov 20, 2025)
+
+**Color System is Broken** ⚠️
+
+**Problems:**
+- Dark mode: borders invisible, text unreadable
+- Light mode: card background = main background (no separation)
+- Tailwind neutrals ≠ CSS variables (mismatch!)
+- Contrast ratios too low (WCAG compliance failed)
+
+**Status:**
+- ✅ Structure done (animations, spacing, pages)
+- ❌ **Colors need complete rebuild**
+
+**Next Phase (4.5 - Critical Fix):**
+1. Fix globals.css - update CSS variable values
+2. Fix colors.ts - correct palette
+3. Fix components - use consistent colors
+4. Validate contrast ratios (WCAG AA everywhere)
+5. Test light + dark mode thoroughly
+
+**Details:** See `docs/COLOR_SYSTEM_ISSUES.md`

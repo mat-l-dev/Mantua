@@ -252,5 +252,30 @@ El sistema Apple Design System está **100% implementado y en producción** en e
 
 ---
 
+## 🚨 CRITICAL ISSUE - Color System Broken
+
+**Status:** ⚠️ VISUAL COHERENCE BROKEN (Nov 20, 2025)
+
+**Problems Found:**
+- ❌ Dark mode: **invisible borders**, low contrast text
+- ❌ Light mode: **no separation** between card and background
+- ❌ **Misalignment** between CSS variables and Tailwind neutrals
+- ❌ **Poor visual hierarchy** - colors don't work together
+
+**Impact:**
+- Structure is correct (animations, spacing work)
+- But colors are incoherent and low-contrast
+- Dark mode is particularly broken
+
+**Solution Needed:**
+- Rebuild palette with proper contrast ratios (WCAG AA)
+- Align CSS vars with Tailwind system
+- Better borders visibility
+- Proper visual hierarchy
+
+**Reference:** `docs/COLOR_SYSTEM_ISSUES.md` - Detailed analysis + solutions
+
+---
+
 **Última actualización:** 20 Noviembre 2025  
-**Próximo:** Phase 4 - Integración en todas las páginas
+**Status:** Phase 4 structure complete, Phase 4.5 (color fix) pending
