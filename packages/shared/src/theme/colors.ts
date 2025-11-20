@@ -11,11 +11,11 @@
 export const colors = {
   light: {
     // Backgrounds
-    background: '#FFFFFF',
+    background: '#FAFAFA',        // Subtle light gray - separates from cards
     foreground: '#000000',
 
     // Cards & Surfaces
-    card: '#FFFFFF',
+    card: '#FFFFFF',              // Pure white - stands out
     cardForeground: '#000000',
 
     // Popovers
@@ -27,15 +27,15 @@ export const colors = {
     primaryForeground: '#FFFFFF',
 
     // Secondary
-    secondary: '#000000',
+    secondary: '#666666',         // Medium gray (better than pure black)
     secondaryForeground: '#FFFFFF',
 
     // Muted (Grays)
     muted: '#F0F0F0',
-    mutedForeground: '#666666',
+    mutedForeground: '#666666',   // Better contrast
 
     // Accent (for hover states)
-    accent: '#0D0D0D',
+    accent: '#141414',            // Darker but not pure black
     accentForeground: '#FFFFFF',
 
     // Destructive (Red)
@@ -43,7 +43,7 @@ export const colors = {
     destructiveForeground: '#FFFFFF',
 
     // Borders & Inputs
-    border: '#E0E0E0',
+    border: '#E0E0E0',            // Visible on white
     input: '#F5F5F5',
 
     // Focus Ring
@@ -51,16 +51,16 @@ export const colors = {
   },
 
   dark: {
-    // Backgrounds
-    background: '#121212',
+    // Backgrounds - CORRECTED for better contrast
+    background: '#0F0F0F',        // Much darker but not pure black
     foreground: '#FFFFFF',
 
-    // Cards & Surfaces
+    // Cards & Surfaces - better separation from bg
     card: '#1A1A1A',
     cardForeground: '#FFFFFF',
 
     // Popovers
-    popover: '#121212',
+    popover: '#0F0F0F',
     popoverForeground: '#FFFFFF',
 
     // Primary (Apple Blue - unchanged in dark mode)
@@ -69,22 +69,22 @@ export const colors = {
 
     // Secondary
     secondary: '#FFFFFF',
-    secondaryForeground: '#121212',
+    secondaryForeground: '#0F0F0F',
 
-    // Muted (Dark grays)
-    muted: '#333333',
-    mutedForeground: '#B3B3B3',
+    // Muted (Dark grays) - CORRECTED to #404040 for better contrast
+    muted: '#404040',
+    mutedForeground: '#B3B3B3',   // Light gray - better contrast
 
     // Accent
     accent: '#EEEEEE',
-    accentForeground: '#121212',
+    accentForeground: '#0F0F0F',
 
     // Destructive (Red - darker for dark mode)
     destructive: '#FF453A',
     destructiveForeground: '#FFFFFF',
 
-    // Borders & Inputs
-    border: '#2D2D2D',
+    // Borders & Inputs - CRITICAL: borders UP from #2D2D2D to #404040!
+    border: '#404040',            // MUCH more visible on dark bg
     input: '#262626',
 
     // Focus Ring

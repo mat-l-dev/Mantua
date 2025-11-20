@@ -4,66 +4,66 @@
 
 @layer base {
   :root {
-    /* Apple Minimalist Palette - Pure White, Black, Grays, Apple Blue */
-    --background: 0 0% 100%;      /* Pure white #ffffff */
-    --foreground: 0 0% 0%;         /* Pure black #000000 */
+    /* Apple Minimalist Palette - CORRECTED for proper contrast and hierarchy */
+    --background: 0 0% 98%;       /* #FAFAFA - subtle light gray */
+    --foreground: 0 0% 0%;        /* Pure black */
     
-    --card: 0 0% 100%;             /* White cards */
-    --card-foreground: 0 0% 0%;    /* Black text on cards */
+    --card: 0 0% 100%;            /* Pure white - stands out from bg */
+    --card-foreground: 0 0% 0%;   /* Black text on white */
     
-    --popover: 0 0% 100%;          /* White popover bg */
+    --popover: 0 0% 100%;         /* White popover bg */
     --popover-foreground: 0 0% 0%; /* Black popover text */
     
-    --primary: 211 100% 50%;       /* Apple Blue #007AFF */
+    --primary: 211 100% 50%;      /* Apple Blue #007AFF */
     --primary-foreground: 0 0% 100%;
     
-    --secondary: 0 0% 0%;          /* Black secondary */
+    --secondary: 0 0% 40%;        /* Medium gray #666666 */
     --secondary-foreground: 0 0% 100%;
     
-    --muted: 0 0% 94%;             /* Light gray #f0f0f0 */
-    --muted-foreground: 0 0% 40%;  /* Medium gray #666 */
+    --muted: 0 0% 94%;            /* Light gray #F0F0F0 */
+    --muted-foreground: 0 0% 40%; /* Medium gray for contrast */
     
-    --accent: 0 0% 5%;             /* Dark gray for hover */
+    --accent: 0 0% 8%;            /* Slightly lighter than fg for hover */
     --accent-foreground: 0 0% 100%;
     
-    --destructive: 0 84.2% 60.2%;  /* Red for errors */
+    --destructive: 0 84.2% 60.2%; /* Red for errors */
     --destructive-foreground: 0 0% 100%;
     
-    --border: 0 0% 88%;            /* Subtle borders #e0e0e0 */
-    --input: 0 0% 96%;             /* Very light input #f5f5f5 */
-    --ring: 211 100% 50%;          /* Focus ring - apple blue */
+    --border: 0 0% 88%;           /* #E0E0E0 - visible on white */
+    --input: 0 0% 96%;            /* #F5F5F5 - very light input */
+    --ring: 211 100% 50%;         /* Focus ring - apple blue */
     
-    --radius: 0.5rem;              /* 8px rounded corners */
+    --radius: 0.5rem;             /* 8px rounded corners */
   }
 
   .dark {
-    /* Apple Dark Mode - True Dark */
-    --background: 0 0% 7%;         /* Almost black #121212 */
-    --foreground: 0 0% 100%;       /* Pure white text */
+    /* Apple Dark Mode - CORRECTED for better contrast and visibility */
+    --background: 0 0% 6%;        /* #0F0F0F - very dark but not pure black */
+    --foreground: 0 0% 100%;      /* Pure white text */
     
-    --card: 0 0% 10%;              /* Slightly lighter than bg */
+    --card: 0 0% 10%;             /* #1A1A1A - lighter than bg for separation */
     --card-foreground: 0 0% 100%;
     
-    --popover: 0 0% 7%;
+    --popover: 0 0% 6%;
     --popover-foreground: 0 0% 100%;
     
-    --primary: 211 100% 50%;       /* Apple Blue (unchanged) */
+    --primary: 211 100% 50%;      /* Apple Blue (unchanged) */
     --primary-foreground: 0 0% 100%;
     
     --secondary: 0 0% 100%;
-    --secondary-foreground: 0 0% 7%;
+    --secondary-foreground: 0 0% 6%;
     
-    --muted: 0 0% 20%;             /* Dark gray #333 */
-    --muted-foreground: 0 0% 70%;  /* Light gray text */
+    --muted: 0 0% 25%;            /* #404040 - lighter for better contrast */
+    --muted-foreground: 0 0% 70%; /* #B3B3B3 - light gray text */
     
-    --accent: 0 0% 92%;            /* Very light gray */
-    --accent-foreground: 0 0% 7%;
+    --accent: 0 0% 92%;           /* Very light gray for hover */
+    --accent-foreground: 0 0% 6%;
     
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 0 0% 18%;            /* Subtle dark borders #2d2d2d */
-    --input: 0 0% 15%;             /* Dark input #262626 */
+    --border: 0 0% 25%;           /* #404040 - UP from 18%! Much more visible */
+    --input: 0 0% 15%;            /* #262626 - dark input */
     --ring: 211 100% 50%;
   }
 
