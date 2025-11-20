@@ -19,7 +19,7 @@ export default async function ShippingSettingsPage() {
   const provinciaTiers = tiers.filter((t) => t.tier_scope === "provincia")
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">
           Configuración de Envíos

@@ -6,11 +6,13 @@ export default async function LocationsPage() {
   const stockLocations = await getStockLocations()
 
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
-      <LocationsClient 
-        pickupLocations={pickupLocations} 
-        stockLocations={stockLocations} 
-      />
+    <div className="flex-col animate-fade-in">
+      <div className="flex-1 space-y-6 p-8 pt-6">
+        <LocationsClient 
+          pickupLocations={pickupLocations} 
+          stockLocations={stockLocations} 
+        />
+      </div>
     </div>
   )
 }

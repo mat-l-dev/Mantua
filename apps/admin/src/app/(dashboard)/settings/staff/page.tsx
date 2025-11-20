@@ -17,8 +17,10 @@ export default async function StaffPage() {
   }))
 
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
-      <StaffClient data={formattedStaff} />
+    <div className="flex-col animate-fade-in">
+      <div className="flex-1 space-y-6 p-8 pt-6">
+        <StaffClient data={formattedStaff} />
+      </div>
     </div>
   )
 }
