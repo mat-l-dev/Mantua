@@ -24,6 +24,15 @@ Mantua es un ecommerce **híbrido industrial** diseñado específicamente para e
 - **Cálculo Regional**: Diferenciación automática entre Lima/Callao y Provincia
 - **Reserva de Stock**: Sistema inteligente que congela inventario durante validación
 
+### 🎨 Apple Design System
+
+El panel administrativo ha sido rediseñado siguiendo estrictamente los principios de diseño de Apple (Human Interface Guidelines).
+
+- **Minimalismo**: Uso de espacios en blanco, tipografía San Francisco (System), y jerarquía visual clara.
+- **Glassmorphism**: Uso sutil de transparencias y desenfoques en tarjetas y modales.
+- **Consistencia**: Sistema de diseño centralizado en `globals.css` con variables CSS (HSL).
+- **Documentación**: Ver [Apple Design System](./apple-design-system/REPORT_COMPLETION.md) y [Guía de UI](./UI_GUIDE.md).
+
 ---
 
 ## 🚀 Quick Start

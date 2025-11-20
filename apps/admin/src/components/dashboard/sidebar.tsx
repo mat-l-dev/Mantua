@@ -25,11 +25,11 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="hidden border-r border-[#E5E5EA] bg-white/95 backdrop-blur-md lg:block lg:w-64 lg:fixed lg:inset-y-0 lg:z-50 dark:border-[#38383A] dark:bg-[#1C1C1E]/95">
+    <div className="hidden border-r border-border bg-background/80 backdrop-blur-xl lg:block lg:w-64 lg:fixed lg:inset-y-0 lg:z-50">
       <div className="flex h-full flex-col">
         {/* Header */}
-        <div className="flex h-16 items-center border-b border-[#E5E5EA] px-6 dark:border-[#38383A] animate-fade-in">
-          <Link href="/" className="flex items-center gap-2 font-semibold text-[#000000] transition-opacity duration-200 hover:opacity-70 dark:text-white">
+        <div className="flex h-16 items-center border-b border-border px-6 animate-fade-in">
+          <Link href="/" className="flex items-center gap-2 font-semibold text-foreground transition-opacity duration-200 hover:opacity-70">
             <span className="text-lg font-semibold tracking-tight">Mantua</span>
           </Link>
         </div>
@@ -45,13 +45,13 @@ export function Sidebar() {
                   <Link
                     href={route.href}
                     className={cn(
-                      "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                      "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200",
                       isActive
-                        ? "bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.25)] dark:shadow-[0_2px_8px_rgba(10,132,255,0.25)]"
-                        : "text-[#666666] hover:bg-[#F2F2F7] hover:text-[#000000] hover:shadow-[0_1px_2px_rgba(0,0,0,0.05)] active:scale-95 dark:text-[#A1A1A6] dark:hover:bg-[#3A3A3C] dark:hover:text-white dark:hover:shadow-[0_1px_2px_rgba(0,0,0,0.2)]"
+                        ? "bg-secondary text-primary shadow-sm"
+                        : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
                     )}
                   >
-                    <route.icon className="h-5 w-5 shrink-0" />
+                    <route.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-primary" : "text-muted-foreground")} />
                     <span>{route.name}</span>
                   </Link>
                 </li>
@@ -61,8 +61,8 @@ export function Sidebar() {
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-[#E5E5EA] p-4 dark:border-[#38383A] animate-fade-in">
-          <div className="text-xs text-[#999999] dark:text-[#666666]">
+        <div className="border-t border-border p-4 animate-fade-in">
+          <div className="text-xs text-muted-foreground">
             v1.0.0
           </div>
         </div>
