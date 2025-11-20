@@ -1,4 +1,5 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss'
+import { themeConfig } from '@mantua/shared/theme'
 
 const config: Config = {
   content: [
@@ -28,48 +29,39 @@ const config: Config = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
       },
+      fontFamily: {
+        sans: themeConfig.typography.fontFamily.sans,
+      },
+      spacing: themeConfig.spacing,
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        xs: themeConfig.shadows.xs,
+        sm: themeConfig.shadows.sm,
+        md: themeConfig.shadows.md,
+        lg: themeConfig.shadows.lg,
+        xl: themeConfig.shadows.xl,
+      },
       animation: {
-        'fade-in': 'fade-in 0.3s ease-out',
-        'slide-up': 'slide-up 0.3s ease-out',
-        enter: 'enter 0.3s ease-out',
+        'fade-in': 'fade-in 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        'slide-up': 'slide-up 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        'scale-in': 'scale-in 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
       },
       keyframes: {
-        'fade-in': {
-          from: { opacity: '0' },
-          to: { opacity: '1' },
-        },
-        'slide-up': {
-          from: {
-            opacity: '0',
-            transform: 'translate3d(0, 16px, 0)',
-          },
-          to: {
-            opacity: '1',
-            transform: 'translate3d(0, 0, 0)',
-          },
-        },
-        enter: {
-          from: {
-            opacity: '0',
-            transform: 'scale(0.95)',
-          },
-          to: {
-            opacity: '1',
-            transform: 'scale(1)',
-          },
-        },
+        'fade-in': themeConfig.animations.keyframes.fadeIn,
+        'slide-up': themeConfig.animations.keyframes.slideInUp,
+        'scale-in': themeConfig.animations.keyframes.scaleIn,
       },
       transitionTimingFunction: {
-        apple: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        smooth: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        quick: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   },
   plugins: [],
-};
+}
 
-export default config;
+export default config
