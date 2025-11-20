@@ -16,9 +16,9 @@ const routes = [
 
 export function Sidebar() {
   return (
-    <div className="hidden border-r bg-zinc-50/40 dark:bg-zinc-900/40 backdrop-blur-xl lg:block lg:w-64 lg:fixed lg:inset-y-0 lg:z-50">
+    <div className="hidden border-r border-input bg-background/95 glass lg:block lg:w-64 lg:fixed lg:inset-y-0 lg:z-50">
       <div className="flex h-full flex-col">
-        <div className="flex h-14 items-center border-b px-6">
+        <div className="flex h-14 items-center border-b border-input px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <span className="text-lg tracking-tight">Mantua Admin</span>
           </Link>
@@ -30,9 +30,8 @@ export function Sidebar() {
                 <Link
                   href={route.href}
                   className={cn(
-                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-all duration-200",
-                    "text-zinc-600 hover:bg-white hover:text-zinc-900 hover:shadow-sm",
-                    "dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-smooth",
+                    "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   <route.icon className="h-4 w-4" />

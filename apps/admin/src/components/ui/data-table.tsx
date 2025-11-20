@@ -129,7 +129,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className="border-b border-neutral-100 dark:border-neutral-900 hover:bg-neutral-50/50 dark:hover:bg-neutral-900/50 transition-colors"
+                  className="border-b border-border hover:bg-muted/50 transition-smooth"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-sm py-4">

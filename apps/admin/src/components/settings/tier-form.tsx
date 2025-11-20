@@ -29,7 +29,7 @@ export function TierUpdateForm({ tier }: { tier: Tier }) {
   }
 
   return (
-    <div className="flex items-center justify-between p-3 border rounded-lg bg-white dark:bg-zinc-950 shadow-sm">
+    <div className="flex items-center justify-between p-3 border border-input rounded-lg bg-background shadow-sm transition-smooth">
       <div className="space-y-1">
         <div className="font-medium text-sm">
           {tier.puntos_minimos} - {tier.puntos_maximos} Puntos

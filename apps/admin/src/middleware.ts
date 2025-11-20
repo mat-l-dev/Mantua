@@ -70,6 +70,7 @@ export async function middleware(request: NextRequest) {
         .single()
 
       if (error || !staffRecord) {
+        console.warn(`⛔ Acceso denegado: El usuario ${user.email} no está en la tabla 'staff'.`)
         // Usuario logueado pero NO es staff - redirigir a login y desloguear
         await supabase.auth.signOut()
         return NextResponse.redirect(new URL("/login", requestUrl.origin))

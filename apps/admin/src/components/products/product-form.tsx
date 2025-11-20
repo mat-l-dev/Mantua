@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Switch } from "@/components/ui/switch"
 import ImageUpload from "@/components/ui/image-upload"
 import { Loader2 } from "lucide-react"
 import { Database } from "@mantua/shared/types/database.types"
@@ -33,6 +34,7 @@ const productSchema = z.object({
     .max(100, "Máximo 100 puntos"),
   category_id: z.string().optional(),
   images: z.array(z.string()).optional().default([]),
+  published: z.boolean().default(true),
 })
 
 type ProductFormValues = z.infer<typeof productSchema>
@@ -55,6 +57,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
       cost: initialData.cost_price,
       puntos_acarreo: initialData.puntos_acarreo,
       images: initialData.image_path ? [initialData.image_path] : [],
+      published: initialData.published ?? true,
     } : {
       name: "",
       description: "",
@@ -62,6 +65,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
       cost: 0,
       puntos_acarreo: 0,
       images: [],
+      published: true,
     },
   })
 
@@ -77,6 +81,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
           cost: values.cost,
           puntos_acarreo: values.puntos_acarreo,
           image_path: values.images?.[0] || null,
+          published: values.published,
         })
 
         if (result.error) {
@@ -93,6 +98,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
           cost: values.cost,
           puntos_acarreo: values.puntos_acarreo,
           image_path: values.images?.[0] || null,
+          published: values.published,
         })
 
         if (result.error) {
@@ -139,7 +145,7 @@ export function ProductForm({ initialData }: ProductFormProps) {
                 <FormControl>
                   <textarea
                     placeholder="Detalles del producto..."
-                    className="flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex min-h-20 w-full rounded-lg border border-input bg-background px-3 py-2 text-base ring-offset-background transition-smooth placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     {...field}
                   />
                 </FormControl>
@@ -244,6 +250,30 @@ export function ProductForm({ initialData }: ProductFormProps) {
                   automáticamente
                 </FormDescription>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Visibilidad */}
+          <FormField
+            control={form.control}
+            name="published"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                <div className="space-y-0.5">
+                  <FormLabel className="text-base">
+                    Visibilidad
+                  </FormLabel>
+                  <FormDescription>
+                    Este producto será visible en la tienda si está activado.
+                  </FormDescription>
+                </div>
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
               </FormItem>
             )}
           />

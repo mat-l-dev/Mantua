@@ -13,6 +13,7 @@ export interface ProductColumn {
   cost_price: number
   puntos_acarreo: number
   is_active: boolean
+  published: boolean
   created_at: string
 }
 
@@ -56,6 +57,24 @@ export const columns: ColumnDef<ProductColumn>[] = [
           </Badge>
           <span className="text-sm">📦</span>
         </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'published',
+    header: 'Visibilidad',
+    cell: ({ row }: CellContext<ProductColumn, unknown>) => {
+      const isPublished = row.getValue('published') as boolean
+      return (
+        <Badge
+          variant={isPublished ? 'default' : 'secondary'}
+          className={isPublished 
+            ? 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950 dark:text-blue-300 dark:border-blue-800' 
+            : 'bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-950 dark:text-yellow-300 dark:border-yellow-800'
+          }
+        >
+          {isPublished ? '👁️ Público' : '🔒 Borrador'}
+        </Badge>
       )
     },
   },

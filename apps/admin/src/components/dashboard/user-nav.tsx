@@ -18,7 +18,7 @@ export function UserNav() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-200 dark:bg-zinc-800">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
             <User className="h-4 w-4" />
           </div>
         </Button>

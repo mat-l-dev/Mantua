@@ -28,6 +28,7 @@ export async function createProduct(data: {
   cost: number
   puntos_acarreo: number
   image_path: string | null
+  published: boolean
 }) {
   try {
     const supabase = await createClient()
@@ -37,10 +38,6 @@ export async function createProduct(data: {
     if (authError || !user) {
       return { error: "No autorizado. Debes iniciar sesión." }
     }
-
-    // Opcional: Verificar si es staff (si tienes RLS configurado correctamente, esto podría ser redundante pero es buena práctica en Server Actions)
-    // const { data: staff } = await supabase.from('staff').select('id').eq('id', user.id).single()
-    // if (!staff) return { error: "No tienes permisos de staff." }
 
     // Generar slug desde el nombre
     const slug = data.name
@@ -61,7 +58,7 @@ export async function createProduct(data: {
       image_path: data.image_path,
       slug: slug,
       sku: sku,
-      published: false,
+      published: data.published,
       is_active: true,
     }
 

@@ -21,6 +21,7 @@ El panel administrativo se encuentra en una fase **inicial**. La infraestructura
     *   Creación de productos simples (Nombre, Precio, Costo, Puntos de Acarreo).
     *   **Soporte de Variantes**: Creación y edición de variantes (`product_variants`).
     *   **Gestión de Stock**: Asignación de stock inicial (`product_stock`).
+    *   **Gestión de Publicación**: Switch Publicado/Borrador para ocultar productos.
 *   **Configuración (`/settings`)**:
     *   Gestión de costos de envío por "Tiers" (`/settings/shipping`).
     *   **Gestión de Staff**: ABM de usuarios y roles (`/settings/staff`).
@@ -45,7 +46,9 @@ Estas son las características críticas que bloquean el lanzamiento operativo d
 
 Necesarias para una operación fluida pero no bloqueantes para el "Happy Path" inicial.
 
-*(Sección vacía - Funcionalidades de prioridad media completadas)*
+### 1. Gestión de Imágenes Avanzada
+*   **Reordenamiento**: Drag & drop para ordenar imágenes.
+*   **Edición**: Recorte o ajuste básico.
 
 ---
 

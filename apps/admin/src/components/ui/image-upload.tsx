@@ -64,7 +64,7 @@ export default function ImageUpload({
     <div>
       <div className="mb-4 flex items-center gap-4">
         {value.map((url) => (
-          <div key={url} className="relative w-[200px] h-[200px] rounded-md overflow-hidden">
+          <div key={url} className="relative w-[200px] h-[200px] rounded-lg overflow-hidden border border-input shadow-sm">
             <div className="z-10 absolute top-2 right-2">
               <Button
                 type="button"

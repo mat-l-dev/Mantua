@@ -122,7 +122,7 @@ export function VariantManager({ productId, variants, stockLocations }: VariantM
         </Button>
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-lg border border-input">
         <Table>
           <TableHeader>
             <TableRow>
@@ -283,7 +283,7 @@ export function VariantManager({ productId, variants, stockLocations }: VariantM
             {stockLocations.map((location) => {
               const currentStock = managingStock?.product_stock.find(s => s.location_id === location.id)?.quantity || 0
               return (
-                <div key={location.id} className="flex items-center justify-between border p-3 rounded-md">
+                <div key={location.id} className="flex items-center justify-between border border-input p-3 rounded-lg">
                   <div>
                     <div className="font-medium">{location.name}</div>
                     <div className="text-sm text-muted-foreground">{location.address || "No address"}</div>

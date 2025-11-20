@@ -9,6 +9,7 @@ migration/
 ├── SQL OFICIAL.sql         # Schema completo (ejecutar primero)
 ├── RLS_POLICIES.sql        # Políticas de seguridad
 ├── FIXES_SECURITY.sql      # Parches de seguridad
+├── FIX_LOGIN_TRIGGER_EMAIL.sql # Fix error login (Database error granting user)
 └── README.md               # Documentación detallada
 ```
 
@@ -31,6 +32,10 @@ migration/
 3. Haz clic en "Run"
 4. Repite con `RLS_POLICIES.sql`
 5. Repite con `FIXES_SECURITY.sql`
+6. Repite con `FIX_LOGIN_TRIGGER_EMAIL.sql` (Si tienes error de login)
+7. Usa `PROMOTE_TO_STAFF_BY_EMAIL.sql` para dar acceso a tu usuario.
+8. Ejecuta `FIX_STAFF_RLS.sql` si tienes problemas de "Acceso denegado" (Fix recursividad RLS).
+9. Ejecuta `FIX_LINTER_WARNINGS.sql` para mejorar la seguridad de las funciones.
 
 **Opción B: CLI de Supabase**
 

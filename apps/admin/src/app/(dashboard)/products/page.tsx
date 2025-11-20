@@ -20,6 +20,7 @@ export default async function ProductsPage() {
     cost_price: product.cost_price,
     puntos_acarreo: product.puntos_acarreo,
     is_active: product.is_active,
+    published: product.published ?? false,
     created_at: new Date(product.created_at).toISOString(),
   }))
 

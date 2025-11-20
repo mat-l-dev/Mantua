@@ -160,7 +160,7 @@ export function StaffRoleForm({ initialData }: StaffRoleFormProps) {
                   control={form.control}
                   name={`permissions.${permission.id}`}
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-lg border border-input p-4">
                       <FormControl>
                         <Checkbox
                           checked={field.value}
