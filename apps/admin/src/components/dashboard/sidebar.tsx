@@ -1,6 +1,6 @@
 // Dashboard sidebar navigation
 import Link from "next/link"
-import { Package, ShoppingCart, Users, BarChart3, Settings, Truck } from "lucide-react"
+import { Package, ShoppingCart, Users, BarChart3, Truck, MapPin, ShieldAlert } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const routes = [
@@ -8,8 +8,10 @@ const routes = [
   { name: "Órdenes", href: "/orders", icon: ShoppingCart },
   { name: "Productos", href: "/products", icon: Package },
   { name: "Clientes", href: "/customers", icon: Users },
+  { name: "Logística", href: "/settings/locations", icon: MapPin },
   { name: "Envíos (Tiers)", href: "/settings/shipping", icon: Truck },
-  { name: "Configuración", href: "/settings", icon: Settings },
+  { name: "Staff", href: "/settings/staff", icon: Users },
+  { name: "Auditoría", href: "/settings/audit", icon: ShieldAlert },
 ]
 
 export function Sidebar() {

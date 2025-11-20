@@ -28,6 +28,8 @@ El panel administrativo se encuentra en una fase **inicial**. La infraestructura
     *   **Verificación de Pagos**: Validación de comprobantes en detalle de orden.
     *   **Gestión de Clientes**: Listado y detalle de clientes (`/customers`).
     *   **Logística y Agencias**: Gestión de `pickup_locations` y `stock_locations` (`/settings/locations`).
+    *   **Dashboard Principal**: KPIs, Gráficos de ingresos y ventas recientes (`/`).
+    *   **Auditoría**: Visor de logs de seguridad y trazabilidad (`/settings/audit`).
 
 ---
 
@@ -43,12 +45,7 @@ Estas son las características críticas que bloquean el lanzamiento operativo d
 
 Necesarias para una operación fluida pero no bloqueantes para el "Happy Path" inicial.
 
-### 1. Dashboard Principal (`/`)
-*   **KPIs**: Gráficos reales de Ventas del día, Órdenes pendientes, Tickets promedio.
-*   **Alertas**: Avisos de "Stock Bajo" o "Pagos pendientes de revisión".
-
-### 2. Auditoría (`/settings/audit`)
-*   **Logs**: Visor de `audit_logs` para trazabilidad de acciones del staff.
+*(Sección vacía - Funcionalidades de prioridad media completadas)*
 
 ---
 
@@ -56,13 +53,11 @@ Necesarias para una operación fluida pero no bloqueantes para el "Happy Path" i
 
 Las siguientes tablas existen en `migration/SQL OFICIAL.sql` pero no tienen ninguna interfaz en el Admin:
 
-| Tabla | Propósito | UI Faltante |
-| :--- | :--- | :--- |
-| `audit_logs` | Trazabilidad | Visor de Logs (Seguridad) |
+*(Todas las tablas principales tienen UI)*
 
 ---
 
 ## 👣 Siguientes Pasos Recomendados
 
-1.  **Dashboard**: Implementar widgets de KPIs.
-2.  **Auditoría**: Implementar visor de logs.
+1.  **QA Final**: Pruebas exhaustivas de flujo completo.
+2.  **Despliegue**: Preparación para producción.

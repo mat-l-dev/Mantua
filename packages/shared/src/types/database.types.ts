@@ -571,6 +571,45 @@ export type Database = {
           }
         ]
       }
+      audit_logs: {
+        Row: {
+          id: string
+          table_name: string
+          record_id: string
+          action: string
+          old_data: Json | null
+          new_data: Json | null
+          changed_by: string | null
+          ip_address: string | null
+          user_agent: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          table_name: string
+          record_id: string
+          action: string
+          old_data?: Json | null
+          new_data?: Json | null
+          changed_by?: string | null
+          ip_address?: string | null
+          user_agent?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          table_name?: string
+          record_id?: string
+          action?: string
+          old_data?: Json | null
+          new_data?: Json | null
+          changed_by?: string | null
+          ip_address?: string | null
+          user_agent?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
       staff_roles: {
         Row: {
           id: string
