@@ -4,6 +4,8 @@ import { createClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
+import { Database } from "@mantua/shared/types/database.types"
+
 type ProductInsert = {
   name: string
   description: string | null
@@ -14,7 +16,7 @@ type ProductInsert = {
   slug: string
   published: boolean
   is_active: boolean
-  sku?: string
+  sku: string
 }
 
 type ProductUpdate = Partial<Omit<ProductInsert, 'slug'>>
@@ -29,6 +31,16 @@ export async function createProduct(data: {
 }) {
   try {
     const supabase = await createClient()
+
+    // Verificar autenticación y permisos
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+      return { error: "No autorizado. Debes iniciar sesión." }
+    }
+
+    // Opcional: Verificar si es staff (si tienes RLS configurado correctamente, esto podría ser redundante pero es buena práctica en Server Actions)
+    // const { data: staff } = await supabase.from('staff').select('id').eq('id', user.id).single()
+    // if (!staff) return { error: "No tienes permisos de staff." }
 
     // Generar slug desde el nombre
     const slug = data.name
@@ -70,7 +82,7 @@ export async function createProduct(data: {
   }
 }
 
-export async function getProducts() {
+export async function getProducts(): Promise<Database['public']['Tables']['products']['Row'][]> {
   const supabase = await createClient()
 
   const { data, error } = await supabase

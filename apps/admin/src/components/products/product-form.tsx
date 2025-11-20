@@ -2,11 +2,13 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { createProduct } from "@/actions/products"
 import {
+  Form,
+  FormField,
   FormItem,
   FormLabel,
   FormControl,
@@ -38,7 +40,8 @@ export function ProductForm() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
-  const { control, handleSubmit, watch, setValue } = useForm<ProductFormValues>({
+  const form = useForm<ProductFormValues>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(productSchema) as any,
     defaultValues: {
       name: "",
@@ -50,7 +53,7 @@ export function ProductForm() {
     },
   })
 
-  const images = watch("images")
+
 
   const onSubmit: SubmitHandler<ProductFormValues> = async (values) => {
     try {
@@ -80,150 +83,158 @@ export function ProductForm() {
 
   return (
     <div className="space-y-6 max-w-2xl">
-      <form onSubmit={handleSubmit(onSubmit) as any} className="space-y-6">
-        {/* Nombre */}
-        <FormItem>
-          <FormLabel>Nombre del Producto</FormLabel>
-          <FormControl>
-            <Controller
-              name="name"
-              control={control}
-              render={({ field }: any) => (
-                <Input placeholder="Ej: Kit Starlink v3" {...field} />
-              )}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          {/* Nombre */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nombre del Producto</FormLabel>
+                <FormControl>
+                  <Input placeholder="Ej: Kit Starlink v3" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* Descripción */}
-        <FormItem>
-          <FormLabel>Descripción</FormLabel>
-          <FormControl>
-            <Controller
-              name="description"
-              control={control}
-              render={({ field }: any) => (
-                <textarea
-                  placeholder="Detalles del producto..."
-                  className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  {...field}
-                />
-              )}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-
-        {/* Imágenes */}
-        <FormItem>
-          <FormLabel>Imágenes del Producto</FormLabel>
-          <FormControl>
-            <ImageUpload
-              disabled={loading}
-              value={images || []}
-              onChange={(url: string) => {
-                setValue("images", [...(images || []), url])
-              }}
-              onRemove={(url: string) => {
-                setValue(
-                  "images",
-                  (images || []).filter((img: string) => img !== url)
-                )
-              }}
-            />
-          </FormControl>
-          <FormDescription>
-            Puedes subir una o más imágenes
-          </FormDescription>
-          <FormMessage />
-        </FormItem>
-
-        {/* Precio y Costo */}
-        <div className="grid grid-cols-2 gap-4">
-          <FormItem>
-            <FormLabel>Precio de Venta (S/)</FormLabel>
-            <FormControl>
-              <Controller
-                name="price"
-                control={control}
-                render={({ field }: any) => (
-                  <Input
-                    type="number"
-                    step="0.01"
-                    placeholder="0.00"
+          {/* Descripción */}
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Descripción</FormLabel>
+                <FormControl>
+                  <textarea
+                    placeholder="Detalles del producto..."
+                    className="flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     {...field}
                   />
-                )}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <FormItem>
-            <FormLabel>Costo (S/)</FormLabel>
-            <FormControl>
-              <Controller
-                name="cost"
-                control={control}
-                render={({ field }: any) => (
-                  <Input
-                    type="number"
-                    step="0.01"
-                    placeholder="0.00"
-                    {...field}
+          {/* Imágenes */}
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Imágenes del Producto</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    disabled={loading}
+                    value={field.value || []}
+                    onChange={(url: string) => {
+                      form.setValue("images", [...(field.value || []), url])
+                    }}
+                    onRemove={(url: string) => {
+                      form.setValue(
+                        "images",
+                        (field.value || []).filter((img: string) => img !== url)
+                      )
+                    }}
                   />
-                )}
-              />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        </div>
+                </FormControl>
+                <FormDescription>
+                  Puedes subir una o más imágenes
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {/* Puntos de Acarreo (Destacado) */}
-        <FormItem>
-          <FormLabel className="flex items-center gap-2">
-            <span className="text-blue-600 dark:text-blue-400">📦</span>
-            Puntos de Acarreo (0-100)
-          </FormLabel>
-          <FormControl>
-            <Controller
-              name="puntos_acarreo"
-              control={control}
-              render={({ field }: any) => (
-                <Input
-                  type="number"
-                  min="0"
-                  max="100"
-                  className="border-blue-200 bg-blue-50/50 dark:border-blue-900 dark:bg-blue-950/20"
-                  placeholder="ej: 25"
-                  {...field}
-                />
+          {/* Precio y Costo */}
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              control={form.control}
+              name="price"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Precio de Venta (S/)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      placeholder="0.00"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
             />
-          </FormControl>
-          <FormDescription>
-            Escala de peso/volumen para calcular costo de envío
-            automáticamente
-          </FormDescription>
-          <FormMessage />
-        </FormItem>
 
-        <Button
-          type="submit"
-          disabled={loading}
-          className="w-full"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creando...
-            </>
-          ) : (
-            "Crear Producto"
-          )}
-        </Button>
-      </form>
+            <FormField
+              control={form.control}
+              name="cost"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Costo (S/)</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      placeholder="0.00"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Puntos de Acarreo (Destacado) */}
+          <FormField
+            control={form.control}
+            name="puntos_acarreo"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center gap-2">
+                  <span className="text-blue-600 dark:text-blue-400">📦</span>
+                  Puntos de Acarreo (0-100)
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min="0"
+                    max="100"
+                    className="border-blue-200 bg-blue-50/50 dark:border-blue-900 dark:bg-blue-950/20"
+                    placeholder="ej: 25"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Escala de peso/volumen para calcular costo de envío
+                  automáticamente
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Creando...
+              </>
+            ) : (
+              "Crear Producto"
+            )}
+          </Button>
+        </form>
+      </Form>
     </div>
   )
 }

@@ -38,6 +38,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Rutas que requieren autenticación
+  // Nota: "/" coincide con todo, así que excluimos explícitamente /login abajo
   const protectedRoutes = ["/", "/products", "/settings"]
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
@@ -49,7 +50,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // CASO B: Usuario anónimo intenta acceder a ruta protegida
-  if (!user && isProtectedRoute) {
+  // Excluimos /login para evitar bucle infinito
+  if (!user && isProtectedRoute && pathname !== "/login") {
     return NextResponse.redirect(new URL("/login", requestUrl.origin))
   }
 

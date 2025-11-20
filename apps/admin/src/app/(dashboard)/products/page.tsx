@@ -12,7 +12,7 @@ export const metadata = {
 export default async function ProductsPage() {
   const products = await getProducts()
 
-  const formattedProducts: ProductColumn[] = (products || []).map((product: any) => ({
+  const formattedProducts: ProductColumn[] = (products || []).map((product) => ({
     id: product.id,
     name: product.name,
     sku: product.sku || 'N/A',

@@ -6,8 +6,12 @@ import { Button } from "@/components/ui/button"
 import { updateTierCost } from "@/actions/shipping"
 import { Loader2, Check, Save } from "lucide-react"
 
-export function TierUpdateForm({ tier }: { tier: any }) {
-  const [cost, setCost] = useState(tier.costo)
+import { Database } from "@mantua/shared/types"
+
+type Tier = Database['public']['Tables']['tiers_acarreo']['Row']
+
+export function TierUpdateForm({ tier }: { tier: Tier }) {
+  const [cost, setCost] = useState<number | string>(tier.costo)
   const [loading, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
 

@@ -85,9 +85,9 @@ export function DataTable<TData, TValue>({
       <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden">
         <Table>
           <TableHeader className="bg-neutral-50 dark:bg-neutral-900">
-            {table.getHeaderGroups().map((headerGroup: any) => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="border-b border-neutral-200 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-900">
-                {headerGroup.headers.map((header: any) => (
+                {headerGroup.headers.map((header) => (
                   <TableHead key={header.id} className="text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wide">
                     {header.isPlaceholder
                       ? null
@@ -102,12 +102,12 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row: any) => (
+              table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   className="border-b border-neutral-100 dark:border-neutral-900 hover:bg-neutral-50/50 dark:hover:bg-neutral-900/50 transition-colors"
                 >
-                  {row.getVisibleCells().map((cell: any) => (
+                  {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="text-sm py-4">
                       {flexRender(
                         cell.column.columnDef.cell,

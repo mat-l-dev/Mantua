@@ -8,14 +8,9 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { TierUpdateForm } from "@/components/settings/tier-form"
+import { Database } from "@mantua/shared/types/database.types"
 
-interface Tier {
-  id: string
-  tier_scope: string
-  puntos_minimos: number
-  puntos_maximos: number
-  costo: number
-}
+type Tier = Database['public']['Tables']['tiers_acarreo']['Row']
 
 export default async function ShippingSettingsPage() {
   const tiers = (await getTiers()) as Tier[]

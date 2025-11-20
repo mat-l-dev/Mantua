@@ -13,7 +13,7 @@ import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "@/lib/utils"
 
-const Form = FormProvider
+
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -28,32 +28,16 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
-  name,
-  children,
   ...props
-}: {
-  name: TName
-  children:
-    | React.ReactNode
-    | ((
-        value: any
-      ) => React.ReactNode)
-} & any) => (
-  <FormFieldContext.Provider value={{ name }}>
-    <Controller 
-      name={name}
-      render={({ field, fieldState, formState }) => {
-        if (typeof children === "function") {
-          return children({ field, fieldState, formState })
-        }
-        return children
-      }}
-      {...props}
-    />
-  </FormFieldContext.Provider>
-)
+}: React.ComponentProps<typeof Controller<TFieldValues, TName>>) => {
+  return (
+    <FormFieldContext.Provider value={{ name: props.name }}>
+      <Controller {...props} />
+    </FormFieldContext.Provider>
+  )
+}
 
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
