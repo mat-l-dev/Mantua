@@ -24,5 +24,11 @@ export default async function ProductsPage() {
     created_at: new Date(product.created_at).toISOString(),
   }))
 
-  return <ProductClient data={formattedProducts} />
+  return (
+    <div className="flex-col animate-fade-in">
+      <div className="flex-1 space-y-6 p-8 pt-6">
+        <ProductClient data={formattedProducts} />
+      </div>
+    </div>
+  )
 }

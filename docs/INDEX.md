@@ -2,6 +2,42 @@
 
 > Ecommerce B2C de conectividad rural: Starlink, kits solares, baterías
 
+## 🎨 Apple Design System (NEW!)
+
+Ver carpeta [`apple-design-system/`](./apple-design-system/):
+- **OVERVIEW.md** - Guía rápida del sistema
+- **SYSTEM.md** - Especificación de diseño (colores, tipografía, tokens)
+- **IMPLEMENTATION.md** - Qué fue implementado (Phases 1-3)
+- **PHASE4.md** - Cómo aplicar cambios a más páginas
+
+**Resumen:** Apple Design System está 100% implementado (Phases 1-3). Phase 4 lista para integrar en todas las páginas.
+
+---
+
+## 📊 Estado Actual del Proyecto
+
+### [STATUS.md](./STATUS.md) 📈 (NEW!)
+**Estado completo del Apple Design System**
+- Phases 1-3 completadas ✅
+- Archivos implementados y ubicaciones
+- Próximos pasos (Phase 4)
+- Documentación desactualizada vs actualizada
+
+**Cuándo leer:** Primero, para entender qué está hecho
+
+---
+
+### [STRUCTURE_ANALYSIS.md](./STRUCTURE_ANALYSIS.md) 🔍 (NEW!)
+**Análisis de estructura de páginas**
+- Cómo funciona cada page (Orders, Products, Customers)
+- Qué cambios son seguros
+- Qué cambios rompen todo
+- Checklist de seguridad
+
+**Cuándo leer:** Antes de modificar páginas en Phase 4
+
+---
+
 ## 📖 Documentos Esenciales
 
 ### [README.md](./README.md) 🚀
