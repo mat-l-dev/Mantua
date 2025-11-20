@@ -12,10 +12,10 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex-1 space-y-6 p-8 pt-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-y-2">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-[#000000] dark:text-white">Dashboard</h2>
-          <p className="text-sm text-[#666666] dark:text-[#A1A1A6] mt-2">Bienvenido a tu panel de control</p>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h2>
+          <p className="text-muted-foreground">Bienvenido a tu panel de control</p>
         </div>
       </div>
       
@@ -29,7 +29,7 @@ export default async function DashboardPage() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
           <CardHeader>
-            <CardTitle className="text-xl">Resumen</CardTitle>
+            <CardTitle>Resumen</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
             <Overview />
@@ -37,7 +37,7 @@ export default async function DashboardPage() {
         </Card>
         <Card className="col-span-3">
           <CardHeader>
-            <CardTitle className="text-xl">Ventas Recientes</CardTitle>
+            <CardTitle>Ventas Recientes</CardTitle>
             <CardDescription>
               Últimas 5 órdenes registradas.
             </CardDescription>

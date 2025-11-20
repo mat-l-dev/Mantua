@@ -5,7 +5,7 @@
 @layer base {
   :root {
     /* Apple Design System - Light Mode */
-    --background: 0 0% 98%;       /* #FAFAFA */
+    --background: 240 5% 96%;     /* #F5F5F7 Apple System Gray 6 */
     --foreground: 0 0% 0%;        /* #000000 */
     
     --card: 0 0% 100%;            /* #FFFFFF */

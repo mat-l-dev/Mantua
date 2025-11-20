@@ -1,5 +1,6 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
 const data = [
@@ -54,18 +55,21 @@ const data = [
 ]
 
 export function Overview() {
+  const { theme } = useTheme()
+  const axisColor = theme === 'dark' ? '#FFFFFF' : '#888888'
+
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>
         <XAxis
           dataKey="name"
-          stroke="#888888"
+          stroke={axisColor}
           fontSize={12}
           tickLine={false}
           axisLine={false}
         />
         <YAxis
-          stroke="#888888"
+          stroke={axisColor}
           fontSize={12}
           tickLine={false}
           axisLine={false}
