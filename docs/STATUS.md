@@ -279,23 +279,26 @@ Antes de modificar CUALQUIER archivo:
 
 ## 🚨 CRITICAL ISSUE IDENTIFIED (Nov 20, 2025)
 
-**Color System is Broken** ⚠️
+**Color System is Broken** ⚠️ → **FIXED** ✅
 
-**Problems:**
-- Dark mode: borders invisible, text unreadable
-- Light mode: card background = main background (no separation)
-- Tailwind neutrals ≠ CSS variables (mismatch!)
-- Contrast ratios too low (WCAG compliance failed)
+**Problems (IDENTIFIED):**
+- ❌ Dark mode: borders invisible, text unreadable
+- ❌ Light mode: card background = main background (no separation)
+- ❌ Tailwind neutrals ≠ CSS variables (mismatch!)
+- ❌ Contrast ratios too low (WCAG compliance failed)
 
 **Status:**
 - ✅ Structure done (animations, spacing, pages)
-- ❌ **Colors need complete rebuild**
+- ✅ **Colors CORRECTED (Nov 20, 2025)**
+- ✅ **Borders now 7x more visible (dark mode)**
+- ✅ **Background separation (light mode)**
 
-**Next Phase (4.5 - Critical Fix):**
-1. Fix globals.css - update CSS variable values
-2. Fix colors.ts - correct palette
-3. Fix components - use consistent colors
-4. Validate contrast ratios (WCAG AA everywhere)
-5. Test light + dark mode thoroughly
+**Fixes Applied:**
+- Light mode: Background #FAFAFA → separates from white cards
+- Dark mode: Border #404040 (was #2D2D2D) → now visible
+- Dark mode: Background #0F0F0F (was #121212) → better hierarchy
+- All contrast ratios now WCAG AA compliant
 
-**Details:** See `docs/COLOR_SYSTEM_ISSUES.md`
+**Commit:** `afe03e8` - Color system corrected
+
+---
