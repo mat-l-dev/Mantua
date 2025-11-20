@@ -24,11 +24,24 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
+import { DataTableFacetedFilter } from './data-table-faceted-filter'
+
+interface FacetedFilter {
+  column: string
+  title: string
+  options: {
+    label: string
+    value: string
+    icon?: React.ComponentType<{ className?: string }>
+  }[]
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   filterPlaceholder?: string
   filterColumn?: string
+  facetedFilters?: FacetedFilter[]
 }
 
 export function DataTable<TData, TValue>({
@@ -36,6 +49,7 @@ export function DataTable<TData, TValue>({
   data,
   filterPlaceholder = 'Filtrar...',
   filterColumn = '',
+  facetedFilters = [],
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -63,8 +77,8 @@ export function DataTable<TData, TValue>({
   return (
     <div className="space-y-4">
       {/* Filtro */}
-      {filterColumn && (
-        <div className="flex items-center gap-2 px-4 pt-4">
+      <div className="flex items-center gap-2 px-4 pt-4">
+        {filterColumn && (
           <Input
             placeholder={filterPlaceholder}
             value={
@@ -75,11 +89,21 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-sm rounded-full border-neutral-200 dark:border-neutral-800"
           />
-          <span className="text-xs text-muted-foreground ml-auto">
-            {table.getFilteredRowModel().rows.length} resultado(s)
-          </span>
-        </div>
-      )}
+        )}
+        {facetedFilters.map((filter) => (
+          table.getColumn(filter.column) && (
+            <DataTableFacetedFilter
+              key={filter.column}
+              column={table.getColumn(filter.column)}
+              title={filter.title}
+              options={filter.options}
+            />
+          )
+        ))}
+        <span className="text-xs text-muted-foreground ml-auto">
+          {table.getFilteredRowModel().rows.length} resultado(s)
+        </span>
+      </div>
 
       {/* Tabla */}
       <div className="rounded-lg border border-neutral-200 dark:border-neutral-800 overflow-hidden">

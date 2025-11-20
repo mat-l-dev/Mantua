@@ -3,10 +3,49 @@
 import { DataTable } from "@/components/ui/data-table"
 import { Separator } from "@/components/ui/separator"
 import { columns, OrderColumn } from "./columns"
+import { CheckCircle2, Circle, Timer, Truck, XCircle } from "lucide-react"
 
 interface OrderClientProps {
   data: OrderColumn[]
 }
+
+const statuses = [
+  {
+    value: "pending",
+    label: "Pendiente",
+    icon: Circle,
+  },
+  {
+    value: "processing",
+    label: "Procesando",
+    icon: Timer,
+  },
+  {
+    value: "verified",
+    label: "Verificado",
+    icon: CheckCircle2,
+  },
+  {
+    value: "rejected",
+    label: "Rechazado",
+    icon: XCircle,
+  },
+  {
+    value: "shipped",
+    label: "Enviado",
+    icon: Truck,
+  },
+  {
+    value: "completed",
+    label: "Completado",
+    icon: CheckCircle2,
+  },
+  {
+    value: "cancelled",
+    label: "Cancelado",
+    icon: XCircle,
+  },
+]
 
 export const OrderClient: React.FC<OrderClientProps> = ({ data }) => {
   return (
@@ -18,13 +57,21 @@ export const OrderClient: React.FC<OrderClientProps> = ({ data }) => {
             Gestiona los pedidos de tu tienda
           </p>
         </div>
-        {/* Orders are usually created by customers, but maybe manual creation is needed later */}
-        {/* <Button onClick={() => router.push(`/orders/new`)}>
-          <Plus className="mr-2 h-4 w-4" /> Nueva Orden
-        </Button> */}
       </div>
       <Separator className="my-4" />
-      <DataTable filterColumn="customer" filterPlaceholder="Buscar cliente..." columns={columns} data={data} />
+      <DataTable 
+        filterColumn="customer" 
+        filterPlaceholder="Buscar cliente..." 
+        columns={columns} 
+        data={data}
+        facetedFilters={[
+          {
+            column: "status",
+            title: "Estado",
+            options: statuses,
+          }
+        ]}
+      />
     </>
   )
 }

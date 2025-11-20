@@ -1,6 +1,6 @@
 # 🏰 MANTUA - Ecommerce Industrial para Perú
 
-**Versión:** 1.0 - Fase Admin en Desarrollo  
+**Versión:** 1.0 - Fase Admin en Desarrollo ([Ver Roadmap](./ADMIN_ROADMAP.md))
 **Stack:** Next.js 15 (App Router) + Supabase + Turborepo + Tailwind CSS v4  
 **Objetivo:** Venta de infraestructura tecnológica pesada (Starlink, Paneles Solares, Baterías) con pasarela de pago manual
 

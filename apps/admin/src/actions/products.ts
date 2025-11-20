@@ -178,3 +178,4 @@ export async function deleteProduct(id: string) {
     return { error: "Error al eliminar el producto" }
   }
 }
+

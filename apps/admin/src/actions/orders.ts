@@ -108,3 +108,21 @@ export async function rejectPayment(proofId: string, orderId: string, reason: st
   revalidatePath(`/orders/${orderId}`)
   revalidatePath("/orders")
 }
+
+export type OrderStatus = 'pending' | 'processing' | 'verified' | 'rejected' | 'shipped' | 'completed' | 'cancelled';
+
+export async function updateOrderStatus(orderId: string, status: OrderStatus) {
+  const supabase = await createClient()
+
+  const { error } = await supabase
+    .from("orders")
+    .update({ status })
+    .eq("id", orderId)
+
+  if (error) {
+    throw new Error(`Error updating order status: ${error.message}`)
+  }
+
+  revalidatePath(`/orders/${orderId}`)
+  revalidatePath("/orders")
+}

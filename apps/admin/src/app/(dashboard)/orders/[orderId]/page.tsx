@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { PaymentVerification } from "@/components/orders/payment-verification"
+import { OrderActions } from "@/components/orders/order-actions"
 
 interface OrderPageProps {
   params: Promise<{
@@ -23,8 +24,8 @@ export default async function OrderPage({ params }: OrderPageProps) {
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Order {order.id.slice(0, 8)}</h2>
         <div className="flex items-center space-x-2">
+          <h2 className="text-3xl font-bold tracking-tight">Order {order.id.slice(0, 8)}</h2>
           <Badge variant={
             order.status === 'completed' ? 'default' : 
             order.status === 'cancelled' ? 'destructive' : 
@@ -33,6 +34,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
             {order.status}
           </Badge>
         </div>
+        <OrderActions orderId={order.id} currentStatus={order.status} />
       </div>
       <Separator />
       

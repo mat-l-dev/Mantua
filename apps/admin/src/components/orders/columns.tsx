@@ -26,7 +26,7 @@ export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "id",
     header: "Orden ID",
-    cell: ({ row }) => <div className="w-[80px] truncate font-mono text-xs">{row.getValue("id")}</div>,
+    cell: ({ row }) => <div className="w-20 truncate font-mono text-xs">{row.getValue("id")}</div>,
   },
   {
     accessorKey: "customer",
